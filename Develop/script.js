@@ -1,22 +1,25 @@
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
-var upperCase = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-var lowerCase = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
-var numbers = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
-var special =["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "<", ">","=", "+"]
+//variables for password content
+var upperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+var lowerCase = "abcdefghijklmnopqrstuvwxyz"
+var numbers = ["0123456789"]
+var special =["!@#$%^&*()=+<>?"]
+var pw =""
 
 function generatePassword() {
   var criteria = "";
   window.alert("Please let us know what to include/exclude from your password by answering the following questions:");
-    var length = window.prompt("How many characters should your password be? (8-128 characters)");
-      if (length < 8 || length > 128) {
+//prompt for password length
+    var charLength = window.prompt("How many characters should your password be? (8-128 characters)");
+      if (charLength < 8 || charLength > 128) {
         alert("Your passord cannot be shorter than 8 characters or longer than 128 characters. Please try again.");
       generatePassword();
 
       }  else{
-        length = length
-        console.log(length)
-    
+        charLength = charLength
+        console.log(charLength)
+//prompts for password content
           var upper = confirm("Would you like your password to contain uppsercase letters?");
             if(upper === true) {
               criteria += upperCase
@@ -37,8 +40,20 @@ function generatePassword() {
               criteria += special
             };
             console.log(criteria)
-          };
-  
+
+          if (!upper && !lower && !confirmNumbers && !confirmSpecial) {
+            alert("You must confirm at least one password content parameter.");
+            generatePassword();
+          } else {
+            for (var i = 0; i < charLength; i++) {
+              var randomPassword = Math.floor(Math.random() * criteria.length)
+              pw = pw + criteria[randomPassword]
+            };
+          }
+          console.log(randomPassword);
+          console.log(pw)
+
+        };    
 }
 
 
@@ -47,7 +62,7 @@ function writePassword() {
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
 
-  passwordText.value = password;
+  passwordText.value = pw;
 
 }
 
